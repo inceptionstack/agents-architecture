@@ -1,6 +1,6 @@
 # Tool Systems
 
-Every agent framework must solve the same problem: how do you expose capabilities to an LLM, execute them safely, and feed results back? This page compares the tool system architectures across all 12 frameworks.
+Every agent framework must solve the same problem: how do you expose capabilities to an LLM, execute them safely, and feed results back? This page compares the tool system architectures across all 13 frameworks.
 
 Related: [Architecture Patterns](Architecture-Patterns.md), [Security Models](Security-Models.md), [LLM Integration](LLM-Integration.md).
 

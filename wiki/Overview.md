@@ -1,12 +1,12 @@
 # Overview
 
-This repository contains automated architecture documentation for **12 AI agent frameworks**. Each was analyzed by examining repository structure, dependency manifests, directory organization, and inline documentation. The output is a set of `.arch.md` files (one per agent) plus this cross-agent wiki.
+This repository contains automated architecture documentation for **13 AI agent frameworks**. Each was analyzed by examining repository structure, dependency manifests, directory organization, and inline documentation. The output is a set of `.arch.md` files (one per agent) plus this cross-agent wiki.
 
 For deeper context, see [Architecture Patterns](Architecture-Patterns.md), [Security Models](Security-Models.md), and [Unique Innovations](Unique-Innovations.md).
 
 ---
 
-## The 12 Frameworks
+## The 13 Frameworks
 
 | Agent | Language | Architecture Pattern | One-Line Description | Source |
 |-------|----------|---------------------|----------------------|--------|
@@ -19,6 +19,7 @@ For deeper context, see [Architecture Patterns](Architecture-Patterns.md), [Secu
 | **NanoClaw** | TypeScript (Node.js) | Event-Driven Multi-Channel Gateway | Container-per-task Claude agent with Apple Container support, launchd integration, and IPC auth | [nanoclaw.arch.md](../nanoclaw.arch.md) |
 | **Nanobot** | Go | Layered + Plugin via MCP | MCP-native Go agent where MCP is the core design primitive, including agent-as-MCP-server composition | [nanobot.arch.md](../nanobot.arch.md) |
 | **NemoClaw** | JavaScript/Node.js + TypeScript | CLI + Plugin + Policy Engine + Container Runtime | Developer sandbox tool with dual-layer network enforcement (DNS proxy + gateway) and 9 security policy presets | [NemoClaw.arch.md](../NemoClaw.arch.md) |
+| **OpenClaw** | TypeScript (Node.js) | Plugin-based Event-Driven Gateway / Microkernel | Self-hosted AI assistant platform with 15+ messaging channels, skills/plugin system, sub-agent orchestration, cron scheduling, and persistent memory via workspace files | [openclaw.arch.md](../openclaw.arch.md) |
 | **OpenFang** | Rust (workspace) | Layered Modular Monolith + Event-Driven | Rust agent platform with "Hands" (autonomous actions), 30+ pre-built agents, Tauri desktop, and Python/JS SDKs | [openfang.arch.md](../openfang.arch.md) |
 | **PicoClaw** | Go | Plugin/Registry + Event-Driven Gateway | Go agent framework with hardware device integration (I2C/SPI), ASR/TTS audio pipeline, BM25 memory search | [picoclaw.arch.md](../picoclaw.arch.md) |
 | **ZeptoClaw** | Rust | Plugin-Based Modular Monolith + Event-Driven | Rust agent with 6 sandbox runtimes, safety taint tracking, Android tools, MQTT/serial channels, agent budget enforcement | [zeptoclaw.arch.md](../zeptoclaw.arch.md) |
@@ -29,16 +30,16 @@ For deeper context, see [Architecture Patterns](Architecture-Patterns.md), [Secu
 
 | Language | Frameworks | % |
 |----------|-----------|---|
-| Rust | IronClaw, MicroClaw, Moltis, OpenFang, ZeptoClaw | 42% |
-| Python | CoPaw, Hermes Agent, Letta | 25% |
-| Go | Nanobot, PicoClaw | 17% |
-| TypeScript/JS | NanoClaw, NemoClaw | 17% |
+| Rust | IronClaw, MicroClaw, Moltis, OpenFang, ZeptoClaw | 38% |
+| Python | CoPaw, Hermes Agent, Letta | 23% |
+| Go | Nanobot, PicoClaw | 15% |
+| TypeScript/JS | NanoClaw, NemoClaw, OpenClaw | 23% |
 
 See [Language Ecosystem](Language-Ecosystem.md) for analysis of why Rust dominates agent infrastructure.
 
 ---
 
-## Common Capabilities (All 12)
+## Common Capabilities (All 13)
 
 - Multi-channel messaging (Telegram, Slack, Discord minimum)
 - Docker containerization
@@ -47,12 +48,12 @@ See [Language Ecosystem](Language-Ecosystem.md) for analysis of why Rust dominat
 - Session/conversation persistence
 - Multi-provider LLM abstraction
 
-## Near-Universal Capabilities (10–11/12)
+## Near-Universal Capabilities (11–12/13)
 
-- MCP (Model Context Protocol) client or server — 11/12
-- Approval/confirmation gates for sensitive operations — 10/12
-- Cron/scheduled task execution — 10/12
-- Sub-agent/delegation — 9/12
+- MCP (Model Context Protocol) client or server — 12/13
+- Approval/confirmation gates for sensitive operations — 11/13
+- Cron/scheduled task execution — 11/13
+- Sub-agent/delegation — 10/13
 
 ---
 

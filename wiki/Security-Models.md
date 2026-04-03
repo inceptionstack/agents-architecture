@@ -1,6 +1,6 @@
 # Security Models
 
-Security is one of the most differentiated dimensions across the 12 frameworks. This page provides a deep dive into sandboxing approaches, permission models, taint tracking, and network policies — and ranks all 12 from most to least secure.
+Security is one of the most differentiated dimensions across the 13 frameworks. This page provides a deep dive into sandboxing approaches, permission models, taint tracking, and network policies — and ranks all 13 from most to least secure.
 
 Related: [Tool Systems](Tool-Systems.md), [Architecture Patterns](Architecture-Patterns.md), [Unique Innovations](Unique-Innovations.md).
 
@@ -209,7 +209,7 @@ ZeptoClaw's `src/safety/` module implements compiler-inspired taint tracking:
 4. **Leak detection** monitors for tainted data reaching output channels
 5. **Chain alerts** fire when a sequence of operations matches a known attack pattern (e.g., jailbreak attempt → credential tool call)
 
-This technique is borrowed from compiler security analysis (LLVM's taint analysis) and web security (OWASP taint analysis). It's the most sophisticated runtime safety mechanism across all 12 frameworks.
+This technique is borrowed from compiler security analysis (LLVM's taint analysis) and web security (OWASP taint analysis). It's the most sophisticated runtime safety mechanism across all 13 frameworks.
 
 ---
 

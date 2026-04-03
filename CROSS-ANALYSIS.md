@@ -1,8 +1,8 @@
-# Cross-Analysis: 12 AI Agent Frameworks
+# Cross-Analysis: 13 AI Agent Frameworks
 
 **Date:** 2026-04-03
 **Audience:** Solutions Architects
-**Scope:** CoPaw, Hermes Agent, IronClaw, Letta, MicroClaw, Moltis, NanoClaw, Nanobot, NemoClaw, OpenFang, PicoClaw, ZeptoClaw
+**Scope:** CoPaw, Hermes Agent, IronClaw, Letta, MicroClaw, Moltis, NanoClaw, Nanobot, NemoClaw, OpenClaw, OpenFang, PicoClaw, ZeptoClaw
 
 ---
 
@@ -11,7 +11,7 @@
 | Agent | Language | Architecture Pattern | Tool System | Memory/State | Security Model | LLM Integration | Unique Feature |
 |-------|----------|---------------------|-------------|-------------|---------------|-----------------|----------------|
 | **CoPaw** | Python (FastAPI) | Hybrid Multi-Tier + Plugin | Function-calling tools in `agents/tools/`, skill scanner pre-validates skills | SQLAlchemy ORM (Postgres/SQLite), conversation memory module, agent memory hooks | Skill scanner (static analysis), tool_guard (runtime), approval workflows, workspace isolation | 13 provider adapters (OpenAI, Anthropic, Google, local), AgentScope orchestration runtime | AgentScope runtime as core orchestration engine; Alibaba Cloud ecosystem integration (ModelScope, private base image); Ollama as default Docker deployment |
-| **Hermes Agent** | Python (FastAPI) | ReAct Agent Loop + Event-Driven Gateway | Central `registry.py` maps tool names → handlers; 40+ tools including browser, MCP, delegation, RL training | SQLite sessions, Honcho memory service integration, persistent memory tool, session search | `tirith_security.py` (named policy layer), `skills_guard.py`, URL safety/SSRF checks, command guards, file read/write guards, credential redaction, PII redaction, prompt injection tests | Multi-model parsers per LLM (DeepSeek, Qwen, Kimi, GLM, Mistral, Llama, Hermes), credential pool with rotation, smart model routing | Per-model tool call parsers (12+ parsers); mixture-of-agents tool; RL training tool; CamoFox (camouflaged browser); most extensive security test suite of all 12 |
+| **Hermes Agent** | Python (FastAPI) | ReAct Agent Loop + Event-Driven Gateway | Central `registry.py` maps tool names → handlers; 40+ tools including browser, MCP, delegation, RL training | SQLite sessions, Honcho memory service integration, persistent memory tool, session search | `tirith_security.py` (named policy layer), `skills_guard.py`, URL safety/SSRF checks, command guards, file read/write guards, credential redaction, PII redaction, prompt injection tests | Multi-model parsers per LLM (DeepSeek, Qwen, Kimi, GLM, Mistral, Llama, Hermes), credential pool with rotation, smart model routing | Per-model tool call parsers (12+ parsers); mixture-of-agents tool; RL training tool; CamoFox (camouflaged browser); most extensive security test suite of all 13 |
 | **IronClaw** | Rust (Tokio/Axum) | Plugin (WASM) + Worker/Orchestrator | WASM-sandboxed tool plugins compiled to WebAssembly via WIT interfaces; built-in tools + MCP bridge | PostgreSQL + libSQL, vector embeddings, conversation history, document chunking | WASM sandbox isolation (Wasmtime), safety crate (`ironclaw_safety`), multi-tenant identity scope isolation, encrypted keychain secrets, Docker sandbox | Anthropic, OpenAI, Gemini, Bedrock, GitHub Copilot, NearAI, Codex; OAuth PKCE per provider, token rotation | WASM-based extension system with WIT interface types; dedicated safety crate with rule engine; fuzzing harness (`cargo-fuzz`); LLM trace fixture replay testing |
 | **Letta** | Python (FastAPI) | Layered SOA + Service Manager | Tool sandbox execution (Docker, Modal, local subprocess); tool schema generator from Python functions; MCP client | PostgreSQL + pgvector (vector similarity), SQLAlchemy ORM, Alembic migrations, archival memory, memory blocks with history, summarizer pipeline | Bearer token auth, org/user scoping, sandbox isolation (Docker/Modal), encrypted BYOK columns, MCP OAuth | LiteLLM multi-provider routing, OpenAI/Anthropic/Google/Bedrock/Together/Groq/etc., OpenAI-compatible API surface | Persistent agent memory with summarization; multi-agent orchestration (round-robin, supervisor, sleeptime patterns); pgvector for archival memory search; versioned agent implementations (v1/v2/v3); ephemeral + voice agents |
 | **MicroClaw** | Rust (workspace crates) | Modular Monolith + Plugin + Event-Driven | Tool trait in `microclaw-tools` crate, tool registry in `src/tools/mod.rs`, hook pipeline intercepts all tool calls | `microclaw-storage` crate (SQLite), memory service + backend, structured memory, vector embeddings | Hook-based interception (`hooks/block-bash/`, `hooks/redact-tool-output/`), tool permissions test, config validation | LLM abstraction in `src/llm.rs`, MCP client, A2A protocol, ACP subagent protocol | Hook system for AOP-style tool interception (block-bash, redact-output, filter-memory); ClawHub skill marketplace; A2A + ACP multi-agent protocols; Nix reproducible builds |
@@ -19,6 +19,7 @@
 | **NanoClaw** | TypeScript (Node.js) | Event-Driven Multi-Channel Gateway | Skills as Claude AI capability plugins in `.claude/skills/`; container-side skills for browser, formatting | SQLite (better-sqlite3), task history in DB, group state | Container-per-task sandboxing (Docker/Apple Container), sender allowlist, mount allowlist (filesystem access control), IPC authentication | Anthropic Claude via Claude CLI inside containers; MCP configuration | Container-per-task isolation (each task gets a fresh container); Apple Container (macOS native) support; IPC auth between host daemon and container agents; launchd service integration |
 | **Nanobot** | Go | Layered + Plugin via MCP | MCP servers as plugins — tools discovered via MCP protocol; built-in servers (agent, system, skills, workflows, tasks, artifacts) | SQLite via GORM, session store with migrations, conversation compaction/truncation | OAuth for MCP server auth, MCP audit logging, MCP sandboxing | OpenAI (Completions + Responses APIs) and Anthropic Claude; unified `complete.go` orchestrator | MCP-native architecture (MCP host as core design); agent-as-MCP-server pattern; YAML config with hot-reload (fswatch); GoReleaser for cross-platform releases; expression evaluation engine |
 | **NemoClaw** | JavaScript/Node.js + TypeScript | CLI + Plugin + Policy Engine + Container Runtime | OpenClaw plugin system; tools via Claude inside sandbox; NIM inference images | No persistent agent memory — session-based sandbox state | **Network policy-based PBAC** (YAML policies with presets), credential exposure testing, binary restriction enforcement, Dockerfile injection prevention, path traversal prevention, DNS proxy enforcement layer | Claude AI inside sandbox; NVIDIA NIM for local GPU inference | Network policy engine with 9 presets (strict, permissive, npm, pypi, github); dual-layer network enforcement (DNS proxy + gateway); most security-focused test suite; sandbox hardening documentation; credential sanitization E2E tests |
+| **OpenClaw** | TypeScript (Node.js) | Plugin-based Event-Driven Gateway / Microkernel | Skills system (SKILL.md + scripts/ + references/), MCP client via mcporter, sub-agent spawning (ACP/subagent), 40+ built-in tools | File-based persistent memory (MEMORY.md, memory/*.md, workspace files), session management with history, memory search (semantic + hybrid) | Sender allowlist, exec approval gates (allow-once/allow-always/deny), sandbox mode, elevated permission controls, safety constitution (no self-preservation/replication) | 30+ providers via pi-ai (Anthropic, OpenAI, Google, Bedrock, Ollama, LiteLLM, etc.), model override per session | 15+ messaging channels (Telegram, WhatsApp, Discord, Slack, Signal, iMessage, Matrix, Line, etc.); cron scheduler; heartbeat system; Canvas UI; node pairing (iOS/Android/macOS); workspace-as-memory architecture; hook sessions; chat completions API |
 | **OpenFang** | Rust (workspace crates) | Layered Modular Monolith + Event-Driven | Skills (60+ bundled), Hands (autonomous actions), Extensions (25 integrations); driver-based tool dispatch | Custom memory crate, wire protocol for serialization | `cargo audit` config, Tauri capability definitions for desktop permissions | Driver pattern in `openfang-runtime/src/drivers/` for Vertex AI, OpenAI, Anthropic; wire protocol | 30+ pre-built agent configurations (orchestrator, researcher, etc.); Tauri desktop app; "Hands" concept (autonomous agent actions vs. passive tools); Python + JS SDKs; LangChain agent integration |
 | **PicoClaw** | Go | Plugin/Registry + Event-Driven Gateway | Tool registry pattern (`pkg/tools/registry.go`), 20+ built-in tools, MCP tools, spawn/subagent tools | JSONL-based persistent memory, JSONL session backend, BM25 text search | OAuth + PKCE auth, encrypted credential store, config security module, workspace-scoped execution | Claude, OpenAI, Bedrock, Azure, Copilot, Codex; factory pattern for provider creation | Hardware device integration (I2C, SPI, embedded devices); ASR/TTS audio subsystem (12+ ASR files); BM25 search in memory; internal event bus (`pkg/bus/`); JSONL-based persistence (no external DB) |
 | **ZeptoClaw** | Rust | Plugin-Based Modular Monolith + Event-Driven | Tool registry, 30+ tool implementations, MCP tools, hardware tools, Android tools, plugin-based channel tools | BM25 + HNSW vector search, embedding-based memory, long-term storage, memory hygiene/snapshots | **6 sandbox runtimes** (Docker, Bubblewrap, Firejail, Landlock, Apple Sandbox, native), safety taint tracking, leak detection, chain alerts, input sanitization, agent mode controls (Safe/Standard/Unrestricted), AES-256-GCM credential encryption | Claude, OpenAI, Gemini, Vertex; provider rotation, fallback, retry, cooldown, quota management | Most sandbox runtime options (6); safety taint tracking + leak detection; hardware/peripheral integrations (ESP32, Arduino, RPi, USB); MQTT + serial channels; multi-tenant Docker deployment; agent budget enforcement; R8r bridge |
@@ -37,7 +38,7 @@ IronClaw and Moltis use **WebAssembly** (via Wasmtime) with **WIT (WebAssembly I
 IronClaw has a dedicated database migration (`V2__wasm_secure_api.sql`) specifically for WASM security state, proving this was designed-in rather than bolted on.
 
 ### 2. Per-Model Tool Call Parsers (Hermes Agent)
-Hermes Agent maintains **12+ dedicated parsers** for extracting tool calls from different LLM outputs (DeepSeek V3, DeepSeek V3.1, Qwen, Qwen3-Coder, Kimi K2, Mistral, Llama, GLM-4.5, GLM-4.7, Hermes/NousResearch, Longcat). This solves a real production problem: each model has subtly different tool call formatting, and a single generic parser would silently fail on edge cases. This is the most model-diverse tool call parsing system across all 12 frameworks.
+Hermes Agent maintains **12+ dedicated parsers** for extracting tool calls from different LLM outputs (DeepSeek V3, DeepSeek V3.1, Qwen, Qwen3-Coder, Kimi K2, Mistral, Llama, GLM-4.5, GLM-4.7, Hermes/NousResearch, Longcat). This solves a real production problem: each model has subtly different tool call formatting, and a single generic parser would silently fail on edge cases. This is the most model-diverse tool call parsing system across all 13 frameworks.
 
 ### 3. Six Sandbox Runtimes in One System (ZeptoClaw)
 ZeptoClaw implements **six distinct sandbox runtimes**: Docker, Bubblewrap, Firejail, Landlock, Apple Sandbox, and native. Each uses different OS-level isolation primitives:
@@ -62,7 +63,7 @@ Letta's architecture treats memory as a first-class concern with three tiers:
 - **Conversational memory** (recent messages)
 - **Archival memory** (vector-indexed in pgvector)
 
-When the context window fills, the **summarizer pipeline** automatically compresses older messages while preserving key information. Memory blocks have **history tracking** (`block_history.py`), enabling temporal queries ("what did the agent know at time T?"). This is the most sophisticated memory system across all 12 frameworks.
+When the context window fills, the **summarizer pipeline** automatically compresses older messages while preserving key information. Memory blocks have **history tracking** (`block_history.py`), enabling temporal queries ("what did the agent know at time T?"). This is the most sophisticated memory system across all 13 frameworks.
 
 ### 7. Container-Per-Task Isolation with IPC Auth (NanoClaw)
 NanoClaw runs each AI task in a **fresh Docker or Apple Container**, communicating via authenticated IPC. The host daemon and container agent are separate processes connected by an IPC channel with explicit authentication (`ipc-auth.ts`). This provides:
@@ -81,7 +82,7 @@ MicroClaw's hook system (`src/hooks.rs` + `hooks/` directory) lets operators ins
 This is essentially **Aspect-Oriented Programming** for agent tool calls, enabling security policies to be expressed as composable, testable scripts rather than embedded in tool code.
 
 ### 9. Rust↔Swift FFI Bridge for Native iOS/macOS (Moltis)
-Moltis bridges its Rust backend to native Swift iOS/macOS apps via `cbindgen` (C bindings generated from Rust). The iOS app uses Apollo GraphQL client talking to the Rust GraphQL API layer (async-graphql). This is architecturally unique among the 12 — no other framework provides native mobile apps backed by a systems language runtime. The approach avoids the Electron/WebView compromise while keeping a single Rust core.
+Moltis bridges its Rust backend to native Swift iOS/macOS apps via `cbindgen` (C bindings generated from Rust). The iOS app uses Apollo GraphQL client talking to the Rust GraphQL API layer (async-graphql). This is architecturally unique among the 13 — no other framework provides native mobile apps backed by a systems language runtime. The approach avoids the Electron/WebView compromise while keeping a single Rust core.
 
 ### 10. Agent-as-MCP-Server Pattern (Nanobot)
 Nanobot uses MCP as its **fundamental architectural primitive** — agents themselves can be exposed as MCP servers (`pkg/servers/agent/`), making the system recursively composable. An agent can call another agent through the same MCP protocol used for external tools. Combined with hot-reloadable YAML configuration (`pkg/fswatch/`) and the expression evaluation engine (`pkg/expr/`), this creates a highly dynamic system where agent capabilities can be reconfigured at runtime without restart.
@@ -90,29 +91,29 @@ Nanobot uses MCP as its **fundamental architectural primitive** — agents thems
 
 ## 3. Common Patterns
 
-### Shared by All or Nearly All (10+/12)
+### Shared by All or Nearly All (10+/13)
 
 1. **Multi-Channel Messaging Support** — Every framework supports at minimum Telegram, Slack, and Discord. Most support 10+ channels including WhatsApp, DingTalk, Feishu/Lark, Email, Matrix, and more. This is clearly a table-stakes requirement for the domain.
 
-2. **MCP (Model Context Protocol) Integration** — 11/12 frameworks implement MCP client or server capabilities. MCP has become the de facto standard for agent tool extensibility.
+2. **MCP (Model Context Protocol) Integration** — 12/13 frameworks implement MCP client or server capabilities. MCP has become the de facto standard for agent tool extensibility.
 
-3. **Multi-Provider LLM Abstraction** — All 12 support multiple LLM providers behind an abstraction layer. Anthropic Claude and OpenAI are universally supported. The provider abstraction follows either a Strategy pattern (Letta, IronClaw) or a factory pattern (PicoClaw, OpenFang).
+3. **Multi-Provider LLM Abstraction** — All 13 support multiple LLM providers behind an abstraction layer. Anthropic Claude and OpenAI are universally supported. The provider abstraction follows either a Strategy pattern (Letta, IronClaw) or a factory pattern (PicoClaw, OpenFang).
 
-4. **Skills/Plugin System** — All 12 have an extensible capability system (called "skills", "tools", "plugins", or "extensions"). These are typically self-contained directories with manifests, scripts, and reference documentation.
+4. **Skills/Plugin System** — All 13 have an extensible capability system (called "skills", "tools", "plugins", or "extensions"). These are typically self-contained directories with manifests, scripts, and reference documentation.
 
 5. **CLI Entry Point** — Every framework provides a command-line interface as a primary entry point. Most also provide web UIs and API servers.
 
-6. **Docker Containerization** — All 12 use Docker for deployment. Docker Compose is the standard for local development orchestration.
+6. **Docker Containerization** — All 13 use Docker for deployment. Docker Compose is the standard for local development orchestration.
 
 7. **Tool Call / Function Calling Pattern** — All frameworks implement the LLM tool-calling loop (prompt → LLM → tool call → execute → feed result back → repeat).
 
-8. **Approval/Confirmation Gates** — 10/12 have some form of human-in-the-loop approval before executing sensitive operations (CoPaw's `approvals/`, Hermes's `approval.py`, IronClaw's safety layer, ZeptoClaw's approval tools, etc.).
+8. **Approval/Confirmation Gates** — 11/13 have some form of human-in-the-loop approval before executing sensitive operations (CoPaw's `approvals/`, Hermes's `approval.py`, IronClaw's safety layer, ZeptoClaw's approval tools, etc.).
 
 9. **Credential/Secret Management** — All frameworks handle API keys for LLM providers. The more mature ones (IronClaw, Moltis, ZeptoClaw) use encrypted stores; others rely on environment variables.
 
 10. **Session/Conversation Persistence** — All persist conversation history in some form (SQLite being the most common local option, PostgreSQL for production deployments).
 
-### Shared by Most (7-9/12)
+### Shared by Most (7-11/13)
 
 - **Cron/Scheduled Task Execution** — CoPaw, Hermes, MicroClaw, Moltis, PicoClaw, ZeptoClaw, NanoClaw all support scheduled agent execution.
 - **Memory/Context Compression** — Letta, Nanobot, Hermes, PicoClaw, ZeptoClaw implement automatic context window management (summarization, compaction, truncation).
@@ -121,7 +122,7 @@ Nanobot uses MCP as its **fundamental architectural primitive** — agents thems
 
 ### Language Split
 
-- **Rust**: IronClaw, MicroClaw, Moltis, OpenFang, ZeptoClaw (5/12 — 42%)
+- **Rust**: IronClaw, MicroClaw, Moltis, OpenFang, ZeptoClaw (5/13 — 42%)
 - **Python**: CoPaw, Hermes Agent, Letta (3/12 — 25%)
 - **Go**: Nanobot, PicoClaw (2/12 — 17%)
 - **TypeScript/Node.js**: NanoClaw, NemoClaw (2/12 — 17%)
@@ -134,12 +135,12 @@ The Rust dominance is notable — it suggests the community values memory safety
 
 ### CoPaw
 - **AgentScope Runtime dependency** — uniquely builds on a third-party agent orchestration runtime (`agentscope==1.0.18`) rather than building its own agent loop. This is a double-edged sword: faster time-to-market but vendor lock-in.
-- **Alibaba Cloud ecosystem** — base Docker image from `agentscope-registry.ap-southeast-1.cr.aliyuncs.com`, ModelScope integration, Chinese font support, WeChat/QQ/DingTalk channels. Most China-ecosystem-integrated of all 12.
+- **Alibaba Cloud ecosystem** — base Docker image from `agentscope-registry.ap-southeast-1.cr.aliyuncs.com`, ModelScope integration, Chinese font support, WeChat/QQ/DingTalk channels. Most China-ecosystem-integrated of all 13.
 - **Desktop app via NSIS** — Windows installer build alongside Docker, targeting a consumer/prosumer audience.
 
 ### Hermes Agent
 - **Mixture-of-Agents Tool** (`mixture_of_agents_tool.py`) — orchestrates multiple LLMs simultaneously for a single query, aggregating their outputs.
-- **CamoFox** — a camouflaged Firefox browser instance (`browser_camofox.py`) with persistent state for stealthy web automation. Unique across all 12.
+- **CamoFox** — a camouflaged Firefox browser instance (`browser_camofox.py`) with persistent state for stealthy web automation. Unique across all 13.
 - **RL Training Tool** — agents can trigger reinforcement learning training runs, making this the only framework with ML training integration.
 - **Nix-based reproducible builds** (`flake.nix`) alongside standard Python packaging.
 - **Most extensive security test suite** — 18+ dedicated security test files covering SQL injection, SSRF, command injection, path traversal, symlink attacks, prompt injection, PII redaction, and more.
@@ -161,7 +162,7 @@ The Rust dominance is notable — it suggests the community values memory safety
 ### MicroClaw
 - **Hook-based tool interception** — the most developer-friendly approach to tool security policy. Hooks are shell scripts, not Rust code, making them accessible to operators without Rust expertise.
 - **A2A + ACP protocols** — supports both Agent-to-Agent (HTTP-based) and Agent Communication Protocol (stdio-based) for inter-agent communication. Most protocol-diverse multi-agent system.
-- **Nostr channel** — decentralized social protocol adapter. Unique among all 12.
+- **Nostr channel** — decentralized social protocol adapter. Unique among all 13.
 - **ClawHub marketplace** — centralized skill marketplace with CLI and API integration.
 
 ### Moltis
@@ -401,14 +402,14 @@ Letta's repository contains `certs/localhost-key.pem` — a TLS private key comm
 ### 4. Historical Plaintext Credential Storage (Letta)
 Letta's migration history (`8149a781ac1b_backfill_encrypted_columns_for_`) reveals that LLM provider API keys were stored in plaintext before being backfilled to encrypted columns. Any database backup taken before this migration contains plaintext API keys.
 
-### 5. Rust Dominates Agent Infrastructure (5/12)
+### 5. Rust Dominates Agent Infrastructure (5/13)
 42% of these frameworks are written in Rust — a language traditionally associated with systems programming, not web services. This suggests the community has concluded that agent infrastructure requires the safety guarantees (memory safety, thread safety, type safety) that Rust provides. The Rust frameworks also consistently have the most sophisticated security models.
 
 ### 6. No Framework Implements Full RBAC
 Despite most frameworks supporting multi-tenancy and multi-user scenarios, **none implement a full Role-Based Access Control system**. Authorization is typically workspace/org scoping or simple bearer token checks. Even IronClaw's multi-tenant isolation is scope-based rather than role-based. This is a significant gap given that agents execute tools with real-world side effects.
 
 ### 7. Everyone Builds Their Own Memory System
-All 12 frameworks implement their own conversation memory and state persistence. There's no shared library or standard protocol for agent memory (unlike MCP for tools). Memory approaches range from JSONL files (PicoClaw) to SQLite (NanoClaw, PicoClaw, Moltis) to PostgreSQL + pgvector (Letta, IronClaw). This fragmentation suggests the community hasn't converged on a memory standard yet.
+All 13 frameworks implement their own conversation memory and state persistence. There's no shared library or standard protocol for agent memory (unlike MCP for tools). Memory approaches range from JSONL files (PicoClaw) to SQLite (NanoClaw, PicoClaw, Moltis) to PostgreSQL + pgvector (Letta, IronClaw). This fragmentation suggests the community hasn't converged on a memory standard yet.
 
 ### 8. Hardware/IoT Integration is Emerging
 Both PicoClaw and ZeptoClaw include hardware integration (I2C, SPI, ESP32, Arduino, RPi, USB, serial, MQTT). This signals that LLM agents are expanding beyond software tasks into physical-world automation. ZeptoClaw even includes Android device tools. This is an underexplored but potentially transformative use case.

@@ -1,6 +1,6 @@
 # Best-of-Breed Agent Design
 
-What would the ideal AI agent look like if we combined the best architectural ideas from all 12 frameworks? This page synthesizes the strongest patterns into a hypothetical "best of breed" blueprint.
+What would the ideal AI agent look like if we combined the best architectural ideas from all 13 frameworks? This page synthesizes the strongest patterns into a hypothetical "best of breed" blueprint.
 
 → See also: [Architecture Patterns](Architecture-Patterns.md) · [Security Models](Security-Models.md) · [Unique Innovations](Unique-Innovations.md)
 

@@ -1,6 +1,6 @@
 # Memory and State
 
-Memory is one of the hardest problems in agent design: LLMs have finite context windows, but agents need to remember things across many interactions. This page compares how all 12 frameworks approach memory, persistence, and state management.
+Memory is one of the hardest problems in agent design: LLMs have finite context windows, but agents need to remember things across many interactions. This page compares how all 13 frameworks approach memory, persistence, and state management.
 
 Related: [Tool Systems](Tool-Systems.md), [LLM Integration](LLM-Integration.md), [Unique Innovations](Unique-Innovations.md).
 

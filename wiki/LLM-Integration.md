@@ -1,6 +1,6 @@
 # LLM Integration
 
-All 12 frameworks must solve the same problem: connect to one or more LLM providers, send prompts, parse tool calls from responses, and feed results back. This page compares how they do it.
+All 13 frameworks must solve the same problem: connect to one or more LLM providers, send prompts, parse tool calls from responses, and feed results back. This page compares how they do it.
 
 Related: [Tool Systems](Tool-Systems.md), [Memory and State](Memory-and-State.md), [Architecture Patterns](Architecture-Patterns.md).
 

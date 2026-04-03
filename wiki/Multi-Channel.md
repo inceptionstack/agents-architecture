@@ -1,6 +1,6 @@
 # Multi-Channel
 
-All 12 frameworks support multiple messaging channels — this is table-stakes for the domain. This page compares channel breadth, adapter architectures, and interesting channel-specific innovations.
+All 13 frameworks support multiple messaging channels — this is table-stakes for the domain. This page compares channel breadth, adapter architectures, and interesting channel-specific innovations.
 
 Related: [Architecture Patterns](Architecture-Patterns.md), [Unique Innovations](Unique-Innovations.md).
 

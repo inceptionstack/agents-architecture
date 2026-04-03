@@ -1,6 +1,6 @@
 # Architecture Patterns
 
-This page catalogues the dominant architectural patterns found across the 12 agent frameworks. Most agents combine multiple patterns; the primary pattern drives the overall code organization while secondary patterns handle specific concerns.
+This page catalogues the dominant architectural patterns found across the 13 agent frameworks. Most agents combine multiple patterns; the primary pattern drives the overall code organization while secondary patterns handle specific concerns.
 
 See also: [Tool Systems](Tool-Systems.md), [Multi-Channel](Multi-Channel.md), [Language Ecosystem](Language-Ecosystem.md).
 
@@ -82,7 +82,7 @@ This pattern enables horizontal scaling — multiple worker processes can consum
 ---
 
 ### 5. Gateway Pattern
-**Agents:** All 12 (universally)
+**Agents:** All 13 (universally)
 
 Every agent implements a gateway that:
 - Accepts messages from multiple channels (Telegram, Slack, etc.)
